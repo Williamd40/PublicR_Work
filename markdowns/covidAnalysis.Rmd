@@ -29,7 +29,7 @@ library(ggvis)
 library(shiny)
 library(rgeos)
 
-Covid19DeathsTotal <-  vroom("../data/time_series_covid19_deaths_global.csv")
+Covid19DeathsTotal <-  vroom("../data/covidData/time_series_covid19_deaths_global.csv")
 
 
 ## Changing working directory, in case local files needed
@@ -436,7 +436,7 @@ Next, I was curious to see how the current covid-19 data looked like for the UK.
 
 ```{r, echo=FALSE,message=FALSE,warning=FALSE}
 ## Up to dateCoviddeath data for the UK, from https://coronavirus.data.gov.uk/details/deaths
-CovidCountryDataUKForDeaths = vroom("../data/overview_2021-10-18.csv")
+CovidCountryDataUKForDeaths = vroom("../data/covidData/overview_2021-10-18.csv")
 
 KeepingColumns <- c("date","cumDeaths28DaysByDeathDate","areaName")
 CovidCountryDataUKForDeaths <-  CovidCountryDataUKForDeaths[KeepingColumns]
@@ -465,7 +465,7 @@ This graph shows how the amount of daily hospital admissions correlates to the d
 ```{r, echo=FALSE,message=FALSE,warning=FALSE}
 
 KeepingColumns <- c("hospitalCases","newDailyNsoDeathsByDeathDate","Date_Corrected")
-UKHospitalAndDeathDailyData <-  vroom("../data/HospitalAndDailyDeathCovidData.csv")
+UKHospitalAndDeathDailyData <-  vroom("../data/covidData/HospitalAndDailyDeathCovidData.csv")
 
 
 
@@ -586,7 +586,7 @@ print(DeathRate)
 
 
 ## https://ourworldindata.org/covid-deaths
-WorldInformation <-   vroom("../data/WorldCovidData.csv")
+WorldInformation <-   vroom("../data/covidData/WorldCovidData.csv")
 
 
 
