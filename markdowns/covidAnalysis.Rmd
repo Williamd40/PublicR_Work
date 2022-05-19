@@ -1,5 +1,5 @@
 ---
-title: "**Visualisation of Time Series Data**"
+title: "**Visualisation of Covid Data**"
 author: "William D'Alessandro"
 runtime: shiny
 output: 
