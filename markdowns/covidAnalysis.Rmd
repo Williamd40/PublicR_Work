@@ -29,15 +29,16 @@ library(ggvis)
 library(shiny)
 library(rgeos)
 
-Covid19DeathsTotal <-  vroom("https://raw.githubusercontent.com/Williamd40/DataForRWorkshops/main/Workshops/Workshop4/time_series_covid19_deaths_global.csv")
+Covid19DeathsTotal <-  vroom("../data/time_series_covid19_deaths_global.csv")
 
-## Changing working directory, incase loco files needed
+
+## Changing working directory, in case local files needed
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ```
 
 
 
-#CovidData Analysis:
+# Covid Data Analysis:
 
 ## Initial Visualisation
 
@@ -113,17 +114,11 @@ CovidCountryDataSorted <- CovidCountryData[order(-CovidCountryData$Deaths),]
 ```{r, include = FALSE}
 
 ## This was simply me being curious to see how many countries were in this data, 188 to be exact.
-NumberOfCountries <- (unique(Covid19DeathsTotalLong$Country_Region))
+NumberOfCountries <- length((unique(Covid19DeathsTotalLong$Country_Region)))
+
 
 
 ```
-
-
-
-
-
-
-
 
 
 
@@ -131,7 +126,7 @@ This graph is plotted as each countries increase in deaths byCovidover the time 
 ```{r, echo=FALSE}
 
 ## make the ggplot object
-FirstGraphicalAnalysis <- ggplot(data = Covid19DeathsTotalLong, aes(x = Date_Corrected, y = Deaths, "FirstGraphicalAnalysis")) + geom_point(aes(col = Country_Region)) + theme(legend.position = "none")+ ggtitle ("Graphical Analysis ofCovidTime Stamp Data, for the whole duration")+  labs(y = "Total Deaths", x = "Date")
+FirstGraphicalAnalysis <- ggplot(data = Covid19DeathsTotalLong, aes(x = Date_Corrected, y = Deaths, "FirstGraphicalAnalysis")) + geom_point(aes(col = Country_Region)) + theme(legend.position = "none")+ ggtitle ("Graphical Analysis of CovidTime Stamp Data, for the whole duration")+  labs(y = "Total Deaths", x = "Date")
 
 FirstGraphicalAnalysis
 ```
@@ -147,7 +142,7 @@ This graph shows the period of 2020-03-20 to 2020-06-01, which is the initial sp
 ## Plotting a second graph of where the initial peak began
 
 SecondGraphicalAnalysis <- ggplot(data = Covid19DeathsTotalLong, aes(x = Date_Corrected, y = Deaths, "SecondGraphicalAnalysis"))
-SecondGraphicalAnalysis + geom_point(aes(col = Country_Region)) + theme(legend.position = "none")+ ggtitle ("Graphical Analysis ofCovidTime Stamp Data, for the Initial Peak" ) +                                       
+SecondGraphicalAnalysis + geom_point(aes(col = Country_Region)) + theme(legend.position = "none")+ ggtitle ("Graphical Analysis of CovidTime Stamp Data, for the Initial Peak" ) +                                       
   scale_x_date(limits = as.Date(c("2020-03-20", "2020-06-01"))) +  labs(y = "Total Deaths", x = "Date")
 
 ```
@@ -441,7 +436,7 @@ Next, I was curious to see how the current covid-19 data looked like for the UK.
 
 ```{r, echo=FALSE,message=FALSE,warning=FALSE}
 ## Up to dateCoviddeath data for the UK, from https://coronavirus.data.gov.uk/details/deaths
-CovidCountryDataUKForDeaths = vroom("https://raw.githubusercontent.com/Williamd40/DataForRWorkshops/main/Workshops/Workshop4/overview_2021-10-18%20(1).csv")
+CovidCountryDataUKForDeaths = vroom("../data/overview_2021-10-18.csv")
 
 KeepingColumns <- c("date","cumDeaths28DaysByDeathDate","areaName")
 CovidCountryDataUKForDeaths <-  CovidCountryDataUKForDeaths[KeepingColumns]
@@ -470,7 +465,7 @@ This graph shows how the amount of daily hospital admissions correlates to the d
 ```{r, echo=FALSE,message=FALSE,warning=FALSE}
 
 KeepingColumns <- c("hospitalCases","newDailyNsoDeathsByDeathDate","Date_Corrected")
-UKHospitalAndDeathDailyData <-  vroom("https://raw.githubusercontent.com/Williamd40/DataForRWorkshops/main/Workshops/Workshop4/HospitalAndDailyDeathCovidData.csv")
+UKHospitalAndDeathDailyData <-  vroom("../data/HospitalAndDailyDeathCovidData.csv")
 
 
 
@@ -502,7 +497,7 @@ HospitalCasesDeathsDailyGraph
 
 ## Last 28 days Deaths
 
-This graph is taken from constantly updatingCovid19 death data for the last 28 days, hover over a point to find out information.
+This graph is taken from constantly updating Covid19 death data for the last 28 days, hover over a point to find out information.
 
 
 
@@ -520,13 +515,12 @@ Last28daysDeaths$Date_Corrected <- as.Date(Last28daysDeaths$date, format =  "%d-
 
 ## This is responsible for embedding the graph into a shiny output, so the hovering points actually work
 ## links with bind_shiny("Last28daysDeathsPlot"), makes the graph intractable
-## I believe this creates the User Interface (UI), that is the actual interactive piece
 
 ui <- fluidPage(
   ggvisOutput("Last28daysDeathsPlot")
 )
 
-##Places all the graph information into Last28daysDeathsPlotActive, acts as the server for shiny
+## Places all the graph information into Last28daysDeathsPlotActive, acts as the server for shiny
 
 Last28daysDeathsPlotActive <- function(input, output) 
   
@@ -584,16 +578,15 @@ print(DeathRate)
 
 
 
-# World mapCovidDeaths
+# World map of Covid Deaths
 
-World heat-map ofCovidDeaths
 
 ```{r,include=FALSE,message=FALSE,warning=FALSE}
 
 
 
 ## https://ourworldindata.org/covid-deaths
-WorldInformation <-   vroom("https://raw.githubusercontent.com/Williamd40/DataForRWorkshops/main/Workshops/Workshop4/WorldCovidData.csv")
+WorldInformation <-   vroom("../data/WorldCovidData.csv")
 
 
 
